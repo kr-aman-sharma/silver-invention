@@ -35,17 +35,13 @@
   --font-family-inria-regular: "Inria Sans Regular", sans-serif;
   --font-family-inter: "Inter", sans-serif;
 
-  --gradient-highlight: linear-gradient(
-    135deg,
-    var(--accent-dark),
-    var(--accent-contrast)
-  );
+  --gradient-highlight: linear-gradient(135deg,
+      var(--accent-dark),
+      var(--accent-contrast));
 
-  --gradient-subtle: linear-gradient(
-    135deg,
-    rgba(100, 32, 170, 0.15),
-    rgba(218, 65, 103, 0.15)
-  );
+  --gradient-subtle: linear-gradient(135deg,
+      rgba(100, 32, 170, 0.15),
+      rgba(218, 65, 103, 0.15));
 
   --glass-border: 1px solid rgba(255, 255, 255, 0.08);
   --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -91,8 +87,15 @@
 /* ============= Animations ============= */
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
 }
 
 @keyframes fadeInUp {
@@ -100,6 +103,7 @@
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -111,6 +115,7 @@
     opacity: 0;
     transform: translateX(-40px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -122,6 +127,7 @@
     opacity: 0;
     transform: translateX(40px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -133,6 +139,7 @@
     opacity: 0;
     transform: scale(0.9);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -140,19 +147,41 @@
 }
 
 @keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
-  50% { box-shadow: 0 0 0 8px transparent; }
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--accent-glow);
+  }
+
+  50% {
+    box-shadow: 0 0 0 8px transparent;
+  }
 }
 
 @keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 /* ============= Scroll Reveal ============= */
@@ -161,7 +190,7 @@
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .reveal.visible {
@@ -173,7 +202,7 @@
   opacity: 0;
   transform: translateX(-40px);
   transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .reveal-left.visible {
@@ -185,7 +214,7 @@
   opacity: 0;
   transform: translateX(40px);
   transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .reveal-right.visible {
@@ -194,14 +223,28 @@
 }
 
 /* Staggered delays */
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-1 {
+  transition-delay: 0.1s;
+}
+
+.reveal-delay-2 {
+  transition-delay: 0.2s;
+}
+
+.reveal-delay-3 {
+  transition-delay: 0.3s;
+}
+
+.reveal-delay-4 {
+  transition-delay: 0.4s;
+}
 
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .reveal, .reveal-left, .reveal-right {
+
+  .reveal,
+  .reveal-left,
+  .reveal-right {
     opacity: 1;
     transform: none;
     transition: none;

@@ -12,7 +12,7 @@ import { ProjectsConf } from "@confs";
       My&nbsp;<span class="highlight">Projects</span>
     </Fragment>
     <Fragment slot="subheader"
-    >Things I created while learning and solving problems</Fragment
+      >Things I created while learning and solving problems</Fragment
     >
     <div class="project-container">
       <div class="projects">
@@ -28,7 +28,10 @@ import { ProjectsConf } from "@confs";
                 />
                 <div slot="details" class="details">
                   <div class="project-title">{project.title}</div>
-                  <p class="project-description" set:html={project.description} />
+                  <p
+                    class="project-description"
+                    set:html={project.description}
+                  />
                   <div class="project-tags">
                     {project.tags.map((tag) => (
                       <Tag class:list={[""]}>{tag}</Tag>
@@ -42,7 +45,11 @@ import { ProjectsConf } from "@confs";
                       </a>
                     )}
                     {!!project.live && (
-                      <a class="action action-live" href={project.live} target="_blank">
+                      <a
+                        class="action action-live"
+                        href={project.live}
+                        target="_blank"
+                      >
                         <i class="cil-external-link" />
                         <span>Live</span>
                       </a>
