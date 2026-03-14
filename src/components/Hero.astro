@@ -9,24 +9,26 @@ import Resume from "./Resume.astro";
 const entry = await getCollection("about");
 ---
 
-<section class="hero">
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
   <div class="container">
     <div class='intro'>
-      <div class='name'>{entry[0].data.introName}</div>
-      <div class='designation'>
+      <div class='name reveal'>{entry[0].data.introName}</div>
+      <div class='designation reveal reveal-delay-1'>
         <div class='tag-1'>I'm <span class='highlight'></span></div>
         <div class='tag-2'>Expert Developer</div>
       </div>
-      <div class='tag-line' set:html={entry[0].data.tagline} />
-      <div class="social-icons">
+      <div class='tag-line reveal reveal-delay-2' set:html={entry[0].data.tagline} />
+      <div class="social-icons reveal reveal-delay-3">
         <Social />
       </div>
-      <div class="cv">
+      <div class="cv reveal reveal-delay-4">
         <Resume />
       </div>
     </div>
-    <div class='profile'>
-      <Image src={avatarImage} height={300} width={300} alt="Avatar" />
+    <div class='profile reveal'>
+      <div class="avatar-glow"></div>
+      <Image src={avatarImage} height={300} width={300} alt="Avatar" class="avatar-image" />
     </div>
   </div>
 </section>
@@ -86,69 +88,121 @@ const entry = await getCollection("about");
 
 <style lang="scss">
   @import "../styles/media.scss";
+
   .hero {
     font-family: var(--font-family-inria);
-    // background: var(--background-primary);
-    background-image: url('../assets/images/hero-bg.svg');
-    background-size: cover;
+    position: relative;
     display: flex;
     justify-content: center;
-    flex-direction: column;
-    background-attachment: fixed;
-    padding: 28px 0;
-    .container {
-      display: flex;
-      width: 100%;
+    padding: 100px 0 60px;
+    min-height: 100vh;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 20% 50%, rgba(100, 32, 170, 0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(218, 65, 103, 0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at 60% 80%, rgba(148, 0, 255, 0.08) 0%, transparent 50%),
+      var(--background-primary);
+    background-size: 200% 200%;
+    animation: gradientShift 15s ease infinite;
+    z-index: 0;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+  }
+
+  .container {
+    display: flex;
+    width: min(1080px, 100%);
+    position: relative;
+    z-index: 1;
+    @include medium_device {
+      flex-direction: column-reverse;
+    }
+  }
+
+  .intro {
+    color: var(--light-main);
+    flex: 2;
+    margin-left: 32px;
+    @include medium_device {
+      margin: 0 20px;
+    }
+    .name {
+      color: var(--light-grey);
+      font-size: var(--text-md);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .designation {
+      margin: 16px 0;
+      font-size: var(--text-4xl);
+      font-weight: 900;
+      line-height: 1.1;
       @include medium_device {
-        flex-direction: column-reverse;
+        font-size: var(--text-2xl);
+        font-weight: 700;
       }
-      .intro {
-        color: var(--light-main);
-        flex: 2;
-        margin-left: 32px;
-        @include medium_device {
-          margin: 0 20px;
-        }
-        .name {
-          color: var(--light-mild);
-        }
-        .designation {
-          margin: 24px 0;
-          font-size: var(--text-4xl);
-          font-weight: 900;
-          @include medium_device {
-            font-size: var(--text-2xl);
-            font-weight: 700;
-          }
-          .highlight {
-            &::after {
-              content: "|";
-              animation: blink 1s infinite;
-              font-weight: 400;
-            }
-          }
-        }
-        .tag-line {
-          color: var(--light-mild);
-          text-align: justify;
-        }
-        .social-icons, .cv {
-          margin: 24px 0 0;
-          @include medium_device {
-            display: block;
-            margin: 24px auto 0;
-          }
-        }
-      }
-      .profile {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        @include medium_device {
-          margin-bottom: 40px;
+      .highlight {
+        &::after {
+          content: "|";
+          animation: blink 1s infinite;
+          font-weight: 400;
         }
       }
     }
+    .tag-line {
+      color: var(--light-mild);
+      text-align: justify;
+      line-height: 1.7;
+      font-size: var(--text-base);
+      max-width: 520px;
+    }
+    .social-icons, .cv {
+      margin: 20px 0 0;
+      @include medium_device {
+        display: block;
+        margin: 20px auto 0;
+      }
+    }
+  }
+
+  .profile {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    @include medium_device {
+      margin-bottom: 40px;
+    }
+  }
+
+  .avatar-glow {
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    filter: blur(40px);
+    animation: pulse 4s ease-in-out infinite;
+  }
+
+  .avatar-image {
+    border-radius: 50%;
+    position: relative;
+    z-index: 1;
+    animation: float 6s ease-in-out infinite;
+    border: 2px solid rgba(255, 255, 255, 0.1);
   }
 </style>

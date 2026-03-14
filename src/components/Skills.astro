@@ -4,28 +4,30 @@ import Container from "@common-components/Container.astro";
 import { SkillIcons } from "@confs";
 ---
 
-<Container>
-  <Fragment slot="header">
-    Skills & <span class="highlight">Expertise</span>
-  </Fragment>
-  <Fragment slot="subheader">My learning journey in tech</Fragment>
-  <div class="marquee">
-    <div class="marquee-content">
-      {
-        Object.keys(SkillIcons).map((skill) => (
-          <Box text={skill} icon={SkillIcons[skill]} />
-        ))
-      }
+<section id="skills">
+  <Container>
+    <Fragment slot="header">
+      Skills & <span class="highlight">Expertise</span>
+    </Fragment>
+    <Fragment slot="subheader">My learning journey in tech</Fragment>
+    <div class="marquee">
+      <div class="marquee-content">
+        {
+          Object.keys(SkillIcons).map((skill) => (
+            <Box text={skill} icon={SkillIcons[skill]} />
+          ))
+        }
+      </div>
+      <div class="marquee-content" aria-hidden="true">
+        {
+          Object.keys(SkillIcons).map((skill) => (
+            <Box text={skill} icon={SkillIcons[skill]} />
+          ))
+        }
+      </div>
     </div>
-    <div class="marquee-content" aria-hidden="true">
-      {
-        Object.keys(SkillIcons).map((skill) => (
-          <Box text={skill} icon={SkillIcons[skill]} />
-        ))
-      }
-    </div>
-  </div>
-</Container>
+  </Container>
+</section>
 
 <style lang="scss">
   @import "../styles/media.scss";
@@ -35,15 +37,15 @@ import { SkillIcons } from "@confs";
     user-select: none;
     gap: 1rem;
     cursor: pointer;
-    // @TODO: fix the disapearing effect
-    // background-image: linear-gradient(to right, #cccccc, transparent 10%, transparent 90%,#cccccc 100%);
+    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
     &-content {
       flex-shrink: 0;
       display: flex;
       justify-content: space-around;
       min-width: 100%;
       gap: 1rem;
-      animation: scroll 20s linear infinite;
+      animation: scroll 25s linear infinite;
     }
     &:hover {
       .marquee-content {

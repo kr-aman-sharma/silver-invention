@@ -31,15 +31,22 @@ const { contactOnly = false } = Astro.props;
     gap: 12px;
     .icon {
       color: var(--light-main);
-      padding: 8px 8px 6px;
-      border: 1px solid var(--light-main);
-      border-radius: 6px;
+      padding: 10px 10px 8px;
+      background: var(--background-glass);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
       text-decoration: none;
+      transition: all var(--transition-smooth);
       &-font {
-        font-size: 24px;
+        font-size: 22px;
       }
       &:hover {
-        background-image: var(--gradient-highlight);
+        background: var(--gradient-highlight);
+        border-color: transparent;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(218, 65, 103, 0.3);
       }
     }
   }
