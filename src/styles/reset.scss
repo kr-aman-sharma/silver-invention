@@ -6,6 +6,19 @@
   box-sizing: border-box;
 }
 
-.body {
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
   font-family: var(--font-family-crimson);
+  background-color: var(--background-primary);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--accent-contrast);
+  color: var(--light-main);
 }

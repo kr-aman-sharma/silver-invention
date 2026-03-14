@@ -1,27 +1,31 @@
 :root {
-  /* Colors */
-  --background-primary: #04111e;
-  --background-dark: #0c1821;
+  /* Colors — refined dark palette */
+  --background-primary: #0a0e17;
+  --background-dark: #060a12;
+  --background-card: rgba(255, 255, 255, 0.03);
+  --background-glass: rgba(255, 255, 255, 0.05);
 
   --accent-contrast: #da4167;
   --accent-light: #9400ff;
   --accent-mid-dark: #793fdf;
   --accent-dark: #6420aa;
+  --accent-glow: rgba(218, 65, 103, 0.4);
 
   --light-main: #fdfffc;
   --light-mild: #f0ebd8;
   --light-grey: #7d8491;
+  --light-subtle: rgba(255, 255, 255, 0.08);
 
   /* typography */
-  --text-xs: 0.5rem;
+  --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;
   --text-md: 1.125rem;
   --text-lg: 1.25rem;
   --text-xl: 1.625rem;
-  --text-2xl: 2.125rem;
-  --text-3xl: 2.625rem;
-  --text-4xl: 3.5rem;
+  --text-2xl: 2.25rem;
+  --text-3xl: 3rem;
+  --text-4xl: 3.75rem;
   --text-5xl: 4.5rem;
 
   // fonts
@@ -29,12 +33,27 @@
   --font-family-madimi: "Madimi One", sans-serif;
   --font-family-inria: "Inria Sans", sans-serif;
   --font-family-inria-regular: "Inria Sans Regular", sans-serif;
+  --font-family-inter: "Inter", sans-serif;
 
   --gradient-highlight: linear-gradient(
-    150deg,
+    135deg,
     var(--accent-dark),
     var(--accent-contrast)
   );
+
+  --gradient-subtle: linear-gradient(
+    135deg,
+    rgba(100, 32, 170, 0.15),
+    rgba(218, 65, 103, 0.15)
+  );
+
+  --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --glass-blur: blur(12px);
+
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @font-face {
@@ -69,12 +88,122 @@
   font-style: normal;
 }
 
+/* ============= Animations ============= */
+
 @keyframes blink {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes fadeInUp {
+  from {
     opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
+  50% { box-shadow: 0 0 0 8px transparent; }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* ============= Scroll Reveal ============= */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Staggered delays */
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-left, .reveal-right {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }

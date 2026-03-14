@@ -1,0 +1,123 @@
+---
+import Social from "./Social.astro";
+---
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="brand-text">A</span><span class="brand-name">man Kumar Sharma</span>
+        <p class="footer-tagline">Software Engineer crafting digital experiences</p>
+      </div>
+      <div class="footer-links">
+        <a href="#career">Career</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <p class="copyright">&copy; {new Date().getFullYear()} Aman Kumar Sharma. Built with Astro.</p>
+      <div class="footer-social">
+        <Social />
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style lang="scss">
+  @import "../styles/media.scss";
+
+  .footer {
+    background: var(--background-dark);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 48px 0 24px;
+    font-family: var(--font-family-inria);
+  }
+
+  .footer-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 32px;
+    @include medium_device {
+      padding: 0 20px;
+    }
+  }
+
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 32px;
+    @include medium_device {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  }
+
+  .footer-brand {
+    .brand-text {
+      background: var(--gradient-highlight);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: var(--text-2xl);
+      font-weight: 900;
+    }
+    .brand-name {
+      color: var(--light-main);
+      font-size: var(--text-xl);
+      font-weight: 700;
+    }
+  }
+
+  .footer-tagline {
+    color: var(--light-grey);
+    font-size: var(--text-sm);
+    margin-top: 8px;
+    font-family: var(--font-family-inria-regular);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    padding-top: 8px;
+    @include medium_device {
+      gap: 16px;
+    }
+    a {
+      color: var(--light-grey);
+      text-decoration: none;
+      font-size: var(--text-sm);
+      transition: color var(--transition-fast);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      &:hover {
+        color: var(--accent-contrast);
+      }
+    }
+  }
+
+  .footer-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+    margin: 32px 0 24px;
+  }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @include medium_device {
+      flex-direction: column;
+      gap: 16px;
+    }
+  }
+
+  .copyright {
+    color: var(--light-grey);
+    font-size: var(--text-xs);
+    font-family: var(--font-family-inria-regular);
+  }
+</style>

@@ -9,18 +9,28 @@
 
 <style lang="scss">
   .card {
-    border: 1px solid var(--light-grey);
+    background: var(--background-glass);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 20px;
     overflow: hidden;
+    transition: transform var(--transition-smooth), box-shadow var(--transition-smooth), border-color var(--transition-smooth);
+    &:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(218, 65, 103, 0.08);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
     .cover {
       background-size: cover;
       height: 200px;
       width: 100%;
       background-position: center;
+      overflow: hidden;
     }
     .details {
-      padding: 16px;
-      background: var(--background-dark);
+      padding: 20px;
+      background: rgba(6, 10, 18, 0.6);
       height: calc(100% - 200px);
       display: inline-flex;
       border-radius: 0 0 20px 20px;

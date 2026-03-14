@@ -3,17 +3,19 @@ import Container from "@common-components/Container.astro";
 import Social from "./Social.astro";
 ---
 
-<Container>
-  <Fragment slot="header"
-    >Let's&nbsp;<span class="highlight">Connect</span></Fragment
-  >
-  <Fragment slot="subheader"
-    >Feel free to reach out through any of these platforms</Fragment
-  >
-  <div class="platforms">
-    <Social contactOnly={true} />
-  </div>
-</Container>
+<section id="contact">
+  <Container>
+    <Fragment slot="header"
+      >Let's&nbsp;<span class="highlight">Connect</span></Fragment
+    >
+    <Fragment slot="subheader"
+      >Feel free to reach out through any of these platforms</Fragment
+    >
+    <div class="platforms reveal">
+      <Social contactOnly={true} />
+    </div>
+  </Container>
+</section>
 
 <style lang="scss">
   .platforms {
