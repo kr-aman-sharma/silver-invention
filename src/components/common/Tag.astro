@@ -4,12 +4,20 @@
 
 <style lang='scss'>
   .tag {
-    padding: 4px 16px 8px;
+    padding: 4px 14px 6px;
     font-family: var(--font-family-inria-regular);
-    border: 1px solid var(--light-grey);
-    color: var(--ligh-main);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--light-grey);
     border-radius: 20px;
     width: fit-content;
     text-transform: lowercase;
+    font-size: var(--text-sm);
+    background: rgba(255, 255, 255, 0.03);
+    transition: all var(--transition-fast);
+    &:hover {
+      border-color: rgba(218, 65, 103, 0.4);
+      color: var(--light-main);
+      background: rgba(218, 65, 103, 0.08);
+    }
   }
 </style>

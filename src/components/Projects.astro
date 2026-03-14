@@ -6,59 +6,65 @@ import Container from "@common-components/Container.astro";
 import { ProjectsConf } from "@confs";
 ---
 
-<Container>
-  <Fragment slot="header">
-    My&nbsp;<span class="highlight">Projects</span>
-  </Fragment>
-  <Fragment slot="subheader"
-  >Things I created while learning and solving problems</Fragment
-  >
-  <div class="project-container">
-    <div class="projects">
-      {
-        ProjectsConf.map((project: Project) => (
-          <Card>
-            <img
-              class="cover-image"
-              slot="cover"
-              src={project.cover}
-              alt={project.title}
-            />
-            <div slot="details" class="details">
-              <div class="project-title">{project.title}</div>
-              <p class="project-description" set:html={project.description} />
-              <div class="project-tags">
-                {project.tags.map((tag) => (
-                  <Tag class:list={[""]}>{tag}</Tag>
-                ))}
-              </div>
-              <div class="project-actions">
-                {!!project.git && (
-                  <a class="action" href={project.git} target="_blank">
-                    <i class="cib-github" />
-                    <span>Source</span>
-                  </a>
-                )}
-                {!!project.live && (
-                  <a class="action" href={project.live} target="_blank">
-                    <i class="cil-external-link" />
-                    <span>Live</span>
-                  </a>
-                )}
-              </div>
+<section id="projects">
+  <Container>
+    <Fragment slot="header">
+      My&nbsp;<span class="highlight">Projects</span>
+    </Fragment>
+    <Fragment slot="subheader"
+    >Things I created while learning and solving problems</Fragment
+    >
+    <div class="project-container">
+      <div class="projects">
+        {
+          ProjectsConf.map((project: Project, idx: number) => (
+            <div class:list={["reveal", `reveal-delay-${(idx % 3) + 1}`]}>
+              <Card>
+                <img
+                  class="cover-image"
+                  slot="cover"
+                  src={project.cover}
+                  alt={project.title}
+                />
+                <div slot="details" class="details">
+                  <div class="project-title">{project.title}</div>
+                  <p class="project-description" set:html={project.description} />
+                  <div class="project-tags">
+                    {project.tags.map((tag) => (
+                      <Tag class:list={[""]}>{tag}</Tag>
+                    ))}
+                  </div>
+                  <div class="project-actions">
+                    {!!project.git && (
+                      <a class="action" href={project.git} target="_blank">
+                        <i class="cib-github" />
+                        <span>Source</span>
+                      </a>
+                    )}
+                    {!!project.live && (
+                      <a class="action action-live" href={project.live} target="_blank">
+                        <i class="cil-external-link" />
+                        <span>Live</span>
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </Card>
             </div>
-          </Card>
-        ))
-      }
+          ))
+        }
+      </div>
     </div>
-  </div>
-</Container>
+  </Container>
+</section>
 
 <style lang="scss">
   @import "../styles/media.scss";
 
   .project-container {
     padding: 0 32px;
+    display: flex;
+    justify-content: center;
     @include medium_device {
       padding: 0;
     }
@@ -67,14 +73,22 @@ import { ProjectsConf } from "@confs";
     display: grid;
     margin: 0 16px;
     grid-template-columns: 1fr 1fr;
-    gap: 24px;
+    gap: 28px;
+    max-width: 1080px;
     @include medium_device {
       grid-template-columns: 1fr;
+      margin: 0;
     }
     .cover-image {
       height: auto;
       width: 100%;
       border-radius: 20px 20px 0 0;
+      object-fit: cover;
+      filter: brightness(0.85);
+      transition: filter var(--transition-smooth);
+    }
+    :global(.card:hover) .cover-image {
+      filter: brightness(1);
     }
     .details {
       color: var(--light-main);
@@ -84,42 +98,54 @@ import { ProjectsConf } from "@confs";
           font-family: var(--font-family-inria);
           font-size: var(--text-lg);
           color: var(--light-mild);
+          font-weight: 700;
         }
         &-description {
           font-family: var(--font-family-inria-regular);
-          font-size: var(--text-base);
-          margin: 16px 0;
+          font-size: var(--text-sm);
+          margin: 12px 0;
+          color: var(--light-grey);
+          line-height: 1.6;
         }
         &-tags {
           display: flex;
           flex-wrap: wrap;
-          gap: 4px 8px;
+          gap: 6px 8px;
         }
         &-actions {
           display: flex;
           margin: 16px 0 0;
-          gap: 8px;
+          gap: 10px;
           .action {
-            background: var(--light-grey);
-            padding: 8px 12px;
-            border-radius: 6px;
+            background: var(--background-glass);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            padding: 8px 16px;
+            border-radius: 8px;
             color: var(--light-main);
             text-decoration: none;
             display: flex;
             gap: 8px;
+            align-items: center;
             font-family: var(--font-family-inria);
-            border: 1px solid transparent;
+            font-size: var(--text-sm);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all var(--transition-fast);
             &:hover {
-              color: var(--light-grey);
-              background: transparent;
-              border-color: var(--light-grey);
+              background: var(--gradient-highlight);
+              border-color: transparent;
+              transform: translateY(-2px);
+            }
+            &-live {
+              background: var(--gradient-highlight);
+              border-color: transparent;
+              &:hover {
+                box-shadow: 0 6px 20px rgba(218, 65, 103, 0.3);
+              }
             }
           }
         }
       }
     }
-  }
-
-  .tag-override {
   }
 </style>

@@ -22,7 +22,7 @@ function getDate(date?: Time) {
 }
 ---
 
-<section class="journey">
+<section class="journey" id="career">
   <div class="journey-container">
     {
       ExperienceConf.map((exp, idx) => (
@@ -30,9 +30,11 @@ function getDate(date?: Time) {
           class:list={[
             "timeline-block",
             `timeline-block-${idx & 1 ? "right" : "left"}`,
+            "reveal",
+            `reveal-delay-${(idx % 4) + 1}`,
           ]}
         >
-          <div class="marker" />
+          <div class:list={["marker", idx === 0 && "marker-current"]} />
           <div class="timeline-content">
             <h3 class="title">{exp.title}</h3>
             <section class="workplace">
@@ -68,16 +70,19 @@ function getDate(date?: Time) {
   </div>
 </section>
 
-<style lang="scss" define:vars={{ cardShadow: "rgba(190, 119, 148, 0.3)" }}>
+<style lang="scss">
   @import "../styles/media.scss";
 
   .journey {
     font-family: var(--font-family-inria);
+    display: flex;
+    justify-content: center;
   }
   .journey-container {
-    padding: 40px 32px;
+    padding: 20px 32px 40px;
     position: relative;
     overflow: hidden;
+    max-width: 1080px;
     &:before {
       content: "";
       position: absolute;
@@ -86,23 +91,23 @@ function getDate(date?: Time) {
       margin-left: -1px;
       width: 2px;
       height: 97%;
-      background: var(--light-main);
+      background: linear-gradient(
+        to bottom,
+        var(--accent-contrast),
+        var(--accent-dark),
+        transparent
+      );
       z-index: 1;
       @include medium_device {
         left: 30px;
       }
     }
     @include medium_device {
-      padding: 40px 20px;
+      padding: 20px 20px 40px;
     }
   }
   .timeline-block {
-    width: -webkit-calc(50% + 10px);
-    width: -moz-calc(50% + 10px);
-    width: calc(50% + 10px);
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
+    width: calc(50% + 8px);
     display: flex;
     gap: 12px;
     clear: both;
@@ -126,25 +131,36 @@ function getDate(date?: Time) {
     }
 
     .marker {
-      width: 20px;
-      height: 20px;
+      width: 14px;
+      height: 14px;
+      min-width: 14px;
       border-radius: 50%;
-      border: 2px solid #f5f7fa;
-      background: var(--accent-contrast);
-      margin-top: 10px;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      background: var(--accent-dark);
+      margin-top: 16px;
       z-index: 9999;
+      transition: all var(--transition-smooth);
+      &-current {
+        background: var(--accent-contrast);
+        animation: pulse 2s ease-in-out infinite;
+        box-shadow: 0 0 12px var(--accent-glow);
+      }
     }
     .timeline-content {
       width: 95%;
-      padding: 0 15px;
-      border: 1px solid var(--light-main);
-      border-radius: 6px;
-      padding: 16px;
-      -webkit-box-shadow: 0 0 5px 2px var(--cardShadow);
-      -moz-box-shadow: 0 0 5px 2px var(--cardShadow);
-      box-shadow: 0 0 5px 2px var(--cardShadow);
-      // box-shadow: 1px 1px 1px 1px rgba(190, 119, 148, 0.3);
+      padding: 20px;
+      background: var(--background-glass);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
       direction: ltr;
+      transition: all var(--transition-smooth);
+      &:hover {
+        border-color: rgba(255, 255, 255, 0.12);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        transform: translateY(-2px);
+      }
       .title {
         font-size: var(--text-lg);
         color: var(--light-mild);
@@ -168,28 +184,32 @@ function getDate(date?: Time) {
         display: flex;
         align-items: baseline;
         gap: 8px;
+        font-size: var(--text-sm);
       }
       .org-site {
         color: var(--light-main);
         text-decoration: none;
+        transition: color var(--transition-fast);
         &:hover {
           color: var(--accent-contrast);
         }
       }
       .location {
-        color: var(--light-main);
+        color: var(--light-grey);
         display: flex;
         align-items: center;
         gap: 8px;
         margin-top: 4px;
+        font-size: var(--text-sm);
       }
       ul {
         margin-left: 18px;
+        margin-top: 8px;
         .description {
-          font-size: var(--text-base);
-          line-height: 1.5em;
+          font-size: var(--text-sm);
+          line-height: 1.7;
           word-spacing: 1px;
-          color: var(--light-main);
+          color: var(--light-grey);
           margin: 4px 0 0;
           font-family: var(--font-family-inria-regular);
         }

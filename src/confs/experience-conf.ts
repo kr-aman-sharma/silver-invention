@@ -10,7 +10,7 @@ const experience: Company[] = [
     },
     org: "Tekion Corp",
     description: [
-      "Tekion Corp is a cloud-native platform transforming the automotive retail industry. It connects dealers, manufacturers, and customers through seamless, AI-driven solutions for sales, service, and operations.",
+      "Tekion Corp is a cloud-native platform transforming the automotive retail industry. It connects dealers, manufacturers, and customers through seamless, AI-driven solutions for sales, service, and operations.", "Reduced user blocking & waiting after each operation by 50%", "Introduced typescript library for non-typed components and improved code quality"
     ],
     location: "Bengaluru, India",
     site: "https://tekion.com/",
@@ -33,6 +33,8 @@ const experience: Company[] = [
       "Groupon is an e-commerce platform which serves as a middle man for the advertiser and consumer and offers discount in the form of coupon",
       "Demonstrated team player qualities and contributed towards development of Deal Creation tool for Groupon merchants to create deals without any external intervention",
       "Pioneered initiatives to merge repositories and git branches to unify the codebase to achieve code reusability by 30%.",
+      "Contributed towards development of new feature in groupon marketplace to improve user experience",
+      "Unified the experience of merchants & groupon sales and marketing team"
     ],
     location: "Bengaluru, India",
     site: "https://www.groupon.com/",
@@ -56,6 +58,7 @@ const experience: Company[] = [
       "Made huge contribution towards the development of their MVP product CRM(Candidate Resource Management) application over several feature",
       "Worked with PM & UX designer to get the requirements and design, and took ownership of end to end feature development",
       "Contributed towards streamling UI components across platform for design consistency",
+      "Build AI based text generating and refactoring widget to help recruiters to generate job descriptions and rephrase them"
     ],
     location: "Hyderabad, India",
     site: "https://www.phenom.com/",

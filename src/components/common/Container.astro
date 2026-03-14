@@ -1,8 +1,8 @@
 <div class="container">
-  <h3 class="header">
+  <h3 class="header reveal">
     <slot name="header" />
   </h3>
-  <h5 class="subheader">
+  <h5 class="subheader reveal reveal-delay-1">
     <slot name="subheader" />
   </h5>
   <slot />
@@ -12,23 +12,25 @@
   @import "../../styles/media.scss";
 
   .container {
-    padding-bottom: 32px;
+    padding: 60px 0 48px;
     .header {
       text-align: center;
-      font-size: var(--text-2xl);
+      font-size: var(--text-3xl);
       color: var(--light-main);
       font-family: var(--font-family-inria);
-      padding: 32px 0 8px;
+      padding: 0 0 10px;
+      letter-spacing: -0.5px;
       @include medium_device {
-        font-size: var(--text-xl);
+        font-size: var(--text-2xl);
       }
     }
     .subheader {
       font-size: var(--text-sm);
       text-align: center;
-      color: var(--light-main);
+      color: var(--light-grey);
       font-family: var(--font-family-inria-regular);
-      margin-bottom: 32px;
+      margin-bottom: 40px;
+      letter-spacing: 0.3px;
     }
   }
 </style>
