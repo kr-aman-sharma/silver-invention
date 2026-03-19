@@ -1,0 +1,139 @@
+---
+// GravityEasterEgg.astro
+---
+
+<script>
+  let keys: string[] = [];
+  const secret = 'gravity';
+
+  window.addEventListener('keydown', (e) => {
+    // Ignore keypresses if user is typing in an input
+    if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+
+    keys.push(e.key.toLowerCase());
+    if (keys.length > secret.length) {
+      keys.shift();
+    }
+    if (keys.join('') === secret) {
+      initGravity();
+    }
+  });
+
+  function initGravity() {
+    // @ts-ignore
+    if (window.__gravityInitialized) return;
+    // @ts-ignore
+    window.__gravityInitialized = true;
+
+    // Dynamically load matter.js from cdnjs
+    const script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js';
+    script.onload = runPhysics;
+    document.body.appendChild(script);
+  }
+
+  function runPhysics() {
+    // Hide scrollbar but allow interaction
+    document.body.style.overflow = 'hidden';
+
+    // @ts-ignore
+    const Matter = window.Matter;
+    const { Engine, Render, Runner, World, Bodies, Mouse, MouseConstraint, Composite } = Matter;
+
+    const engine = Engine.create();
+    const world = engine.world;
+
+    // Create boundaries
+    const ground = Bodies.rectangle(window.innerWidth / 2, window.innerHeight + 50, window.innerWidth, 100, { isStatic: true });
+    const wallLeft = Bodies.rectangle(-50, window.innerHeight / 2, 100, window.innerHeight, { isStatic: true });
+    const wallRight = Bodies.rectangle(window.innerWidth + 50, window.innerHeight / 2, 100, window.innerHeight, { isStatic: true });
+    const ceiling = Bodies.rectangle(window.innerWidth / 2, -1000, window.innerWidth, 100, { isStatic: true }); // A high ceiling just in case
+
+    Composite.add(world, [ground, wallLeft, wallRight, ceiling]);
+
+    // Gather visible DOM elements to "drop"
+    const safeSelectors = 'h1, h2, h3, h4, p, img, a, button, canvas, .card, .card-item, .project-card, .skill-box, li';
+    // query from standard elements but strictly excluding head, scripts, body
+    const rawElements = document.querySelectorAll(safeSelectors);
+
+    // Filter out elements that are inside another element that will also fall
+    // so we don't double up and rip containers apart internally
+    const elementsToFall = Array.from(rawElements).filter(el => {
+      // Must be visible
+      const rect = el.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0 || window.getComputedStyle(el).display === 'none' || window.getComputedStyle(el).opacity === '0') return false;
+
+      // Ensure no parent is also in the selected list
+      let parent = el.parentElement;
+      while (parent && parent !== document.body) {
+        if (parent.matches && parent.matches(safeSelectors)) return false;
+        parent = parent.parentElement;
+      }
+      return true;
+    });
+
+    const bodiesMap: Array<any> = [];
+
+    // First pass: measure everything BEFORE altering the DOM to preserve layout coordinates
+    elementsToFall.forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+
+      const body = Bodies.rectangle(x, y, rect.width, rect.height, {
+        restitution: 0.8, // Bounciness
+        friction: 0.1,
+        density: 0.001
+      });
+
+      // Disable CSS transitions so the transform overrides are immediate
+      (el as HTMLElement).style.transition = 'none';
+
+      bodiesMap.push({ el, body, rect, cx: x, cy: y });
+    });
+
+    // Second pass: apply absolute positioning
+    bodiesMap.forEach(({ el, body, rect }) => {
+      // Fix positions to viewport
+      el.style.position = 'fixed';
+      el.style.top = rect.top + 'px';
+      el.style.left = rect.left + 'px';
+      el.style.width = rect.width + 'px';
+      el.style.height = rect.height + 'px';
+      el.style.margin = '0';
+      el.style.zIndex = '9999';
+
+      Composite.add(world, body);
+    });
+
+    // Add mouse control so user can throw elements around
+    const mouse = Mouse.create(document.body);
+    const mouseConstraint = MouseConstraint.create(engine, {
+      mouse: mouse,
+      constraint: {
+        stiffness: 0.2,
+        render: { visible: false }
+      }
+    });
+
+    Composite.add(world, mouseConstraint);
+
+    // Keep the mouse in sync with scrolling
+    mouseConstraint.mouse.element.removeEventListener("mousewheel", mouseConstraint.mouse.mousewheel);
+    mouseConstraint.mouse.element.removeEventListener("DOMMouseScroll", mouseConstraint.mouse.mousewheel);
+
+    // Start running the engine
+    Runner.run(Runner.create(), engine);
+    
+    // On each tick, update DOM positions to match Physics engine
+    Matter.Events.on(engine, 'afterUpdate', function() {
+      bodiesMap.forEach(({ el, body, cx, cy }) => {
+        // Body position is its center. We need to translate by the delta from the original center.
+        const dx = body.position.x - cx;
+        const dy = body.position.y - cy;
+        
+        el.style.transform = `translate(${dx}px, ${dy}px) rotate(${body.angle}rad)`;
+      });
+    });
+  }
+</script>
