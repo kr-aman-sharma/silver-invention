@@ -1,20 +1,16 @@
 ---
 import { SocialConf } from "@confs";
-
-interface Props {
-  contactOnly?: boolean;
-}
-
-const { contactOnly = false } = Astro.props;
 ---
 
 <section class="social">
   {
-    SocialConf.filter(
-      (soc) =>
-        typeof soc.canContact === "undefined" || soc.canContact === contactOnly
-    ).map((soc) => (
-      <a href={soc.target} target="_blank" class="icon" id={soc._id}>
+    SocialConf.map((soc) => (
+      <a
+        href={soc.target}
+        target={soc._id === "email" ? "_self" : "_blank"}
+        class="icon"
+        id={soc._id}
+      >
         {soc.iconType === "core" ? (
           <i class:list={[soc.iconName, "icon-font"]} />
         ) : (
