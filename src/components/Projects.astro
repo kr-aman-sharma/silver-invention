@@ -80,48 +80,56 @@ import { ProjectsConf } from "@confs";
       margin: 0;
     }
     .cover-image {
-      height: auto;
+      height: 100%;
       width: 100%;
       border-radius: 20px 20px 0 0;
       object-fit: cover;
       filter: brightness(0.85);
-      transition: filter var(--transition-smooth);
+      transform: scale(1.01);
+      transition: filter var(--transition-smooth), transform var(--transition-smooth);
     }
     :global(.card:hover) .cover-image {
       filter: brightness(1);
+      transform: scale(1.06);
     }
     .details {
       color: var(--light-main);
+      display: flex;
+      flex-direction: column;
       .project {
         &-title {
-          text-align: center;
           font-family: var(--font-family-inria);
-          font-size: var(--text-lg);
-          color: var(--light-mild);
+          font-size: var(--text-xl);
           font-weight: 700;
+          background: var(--gradient-highlight);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          margin-bottom: 4px;
         }
         &-description {
           font-family: var(--font-family-inria-regular);
-          font-size: var(--text-sm);
-          margin: 12px 0;
-          color: var(--light-grey);
+          font-size: var(--text-base);
+          margin: 12px 0 20px;
+          color: var(--light-mild);
           line-height: 1.6;
+          flex-grow: 1;
         }
         &-tags {
           display: flex;
           flex-wrap: wrap;
-          gap: 6px 8px;
+          gap: 8px 10px;
+          margin-bottom: 20px;
         }
         &-actions {
           display: flex;
-          margin: 16px 0 0;
-          gap: 10px;
+          gap: 12px;
+          margin-top: auto;
           .action {
             background: var(--background-glass);
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
-            padding: 8px 16px;
-            border-radius: 8px;
+            padding: 10px 20px;
+            border-radius: 12px;
             color: var(--light-main);
             text-decoration: none;
             display: flex;
@@ -132,15 +140,17 @@ import { ProjectsConf } from "@confs";
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all var(--transition-fast);
             &:hover {
-              background: var(--gradient-highlight);
-              border-color: transparent;
+              background: var(--gradient-subtle);
+              border-color: rgba(218, 65, 103, 0.5);
               transform: translateY(-2px);
+              box-shadow: 0 4px 15px rgba(218, 65, 103, 0.2);
             }
             &-live {
               background: var(--gradient-highlight);
               border-color: transparent;
               &:hover {
-                box-shadow: 0 6px 20px rgba(218, 65, 103, 0.3);
+                box-shadow: 0 6px 20px rgba(218, 65, 103, 0.4);
+                transform: translateY(-2px) scale(1.02);
               }
             }
           }
