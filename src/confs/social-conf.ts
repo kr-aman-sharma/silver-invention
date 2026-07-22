@@ -9,13 +9,13 @@ const SocialConf: SocialIcon[] = [
   {
     _id: "linkedin",
     iconName: "cib-linkedin-in",
-    target: "https://www.linkedin.com/in/iaman0004",
+    target: "https://www.linkedin.com/in/kr-aman-sharma",
     iconType: "core",
   },
   {
     _id: "github",
     iconName: "cib-github",
-    target: "https://github.com/iaman0004",
+    target: "https://github.com/kr-aman-sharma",
     iconType: "core",
   },
   {
